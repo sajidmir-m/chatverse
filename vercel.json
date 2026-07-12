@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "fluid": true,
+  "installCommand": "npm install --include=dev --prefix client && npm install --include=dev --prefix server",
+  "buildCommand": "npm run vercel-build --prefix server",
+  "functions": {
+    "src/server.ts": {
+      "maxDuration": 300
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api|socket.io|health|assets|favicon).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

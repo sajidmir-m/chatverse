@@ -1,0 +1,144 @@
+.home-page {
+  min-height: 100%;
+  background: var(--background);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.home-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  background: linear-gradient(135deg, var(--header-start), var(--header-end));
+  color: white;
+}
+
+.home-page__profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.home-page__profile h1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-page__profile p {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.home-page__logout {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 13px;
+}
+
+.home-page__search-wrap {
+  padding: 16px 20px;
+}
+
+.home-page__search {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.home-page__search:focus {
+  outline: none;
+  border-color: var(--primary-light);
+}
+
+.home-page__results {
+  padding: 0 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-page__status {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 12px 0;
+  text-align: center;
+}
+
+.home-page__user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: left;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.home-page__user-card:hover {
+  border-color: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.home-page__user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.home-page__name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.home-page__username {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.home-page__presence {
+  font-size: 12px;
+}
+
+.home-page__presence.online {
+  color: var(--online);
+}
+
+.home-page__presence.offline {
+  color: var(--text-muted);
+}
+
+.home-page__chat-link {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .home-page__header {
+    padding: 16px;
+  }
+
+  .home-page__search-wrap,
+  .home-page__results {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

@@ -1,0 +1,114 @@
+.call-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--call-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.call-overlay__content {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.call-overlay__status {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.call-overlay__videos {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.call-overlay__videos--voice {
+  aspect-ratio: unset;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.call-overlay__remote {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.call-overlay__local {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid white;
+}
+
+.call-overlay__voice-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  animation: pulse 2s infinite;
+}
+
+.call-overlay__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.call-overlay__btn {
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.call-overlay__btn--accept {
+  background: var(--success);
+}
+
+.call-overlay__btn--reject {
+  background: var(--error);
+}
+
+@media (max-width: 480px) {
+  .call-overlay__local {
+    width: 80px;
+    height: 60px;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .call-overlay__btn {
+    padding: 10px 18px;
+    min-width: 80px;
+    font-size: 13px;
+  }
+}

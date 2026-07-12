@@ -1,0 +1,33 @@
+.skeleton {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skeleton__row--own {
+  align-items: flex-end;
+}
+
+.skeleton__row--other {
+  align-items: flex-start;
+}
+
+.skeleton__bubble {
+  height: 40px;
+  border-radius: 18px;
+  background: var(--skeleton);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton__bubble--sm {
+  height: 14px;
+  border-radius: 8px;
+  opacity: 0.6;
+}
