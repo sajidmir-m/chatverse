@@ -8,11 +8,10 @@
       "maxDuration": 300
     }
   },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/src/server.ts" },
-    { "src": "/health", "dest": "/src/server.ts" },
-    { "src": "/socket.io/(.*)", "dest": "/src/server.ts" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/src/server.ts" },
+    { "source": "/health", "destination": "/src/server.ts" },
+    { "source": "/socket.io/(.*)", "destination": "/src/server.ts" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
