@@ -16,4 +16,11 @@ if (!existsSync(clientDist)) {
 rmSync(publicDir, { recursive: true, force: true });
 mkdirSync(publicDir, { recursive: true });
 cpSync(clientDist, publicDir, { recursive: true });
+
+const indexPath = join(publicDir, 'index.html');
+if (!existsSync(indexPath)) {
+  console.error('Build verification failed: public/index.html was not created');
+  process.exit(1);
+}
+
 console.log('Client copied to public/');

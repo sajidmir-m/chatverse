@@ -8,10 +8,11 @@
       "maxDuration": 300
     }
   },
-  "rewrites": [
-    {
-      "source": "/((?!api|socket.io|health|assets|favicon).*)",
-      "destination": "/index.html"
-    }
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/src/server.ts" },
+    { "src": "/health", "dest": "/src/server.ts" },
+    { "src": "/socket.io/(.*)", "dest": "/src/server.ts" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
