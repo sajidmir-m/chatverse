@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, rmSync } from 'fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -22,5 +22,8 @@ if (!existsSync(indexPath)) {
   console.error('Build verification failed: public/index.html was not created');
   process.exit(1);
 }
+
+const indexHtml = readFileSync(indexPath, 'utf8').replace(/\s+crossorigin/g, '');
+writeFileSync(indexPath, indexHtml, 'utf8');
 
 console.log('Client copied to public/');

@@ -29,24 +29,19 @@ const resolvePublicDir = (): string | null => {
 
 const app: Application = express();
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      useDefaults: true,
-      directives: {
-        'connect-src': [
-          "'self'",
-          'https://*.supabase.co',
-          'wss://*.supabase.co',
-          'https://accounts.google.com',
-        ],
-        'img-src': ["'self'", 'data:', 'blob:', 'https://*.supabase.co'],
-        'frame-src': ["'self'", 'https://accounts.google.com'],
-      },
-    },
-    crossOriginEmbedderPolicy: false,
-  })
-);
+const apiSecurity = helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: false,
+  crossOriginOpenerPolicy: false,
+  crossOriginEmbedderPolicy: false,
+});
+
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api') || req.path === '/health') {
+    return apiSecurity(req, res, next);
+  }
+  return next();
+});
 app.use(compression());
 app.use(
   cors({
