@@ -3,6 +3,7 @@
   "name": "chatversa",
   "scripts": {
     "build": "npm run vercel-build --prefix server",
+    "vercel-build": "npm run vercel-build --prefix server",
     "dev:client": "npm run dev --prefix client",
     "dev:server": "npm run dev --prefix server"
   }
