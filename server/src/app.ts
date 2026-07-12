@@ -3,11 +3,29 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
+import fs from 'fs';
+import path from 'path';
 import authRoutes from './routes/authRoutes';
 import friendRoutes from './routes/friendRoutes';
 import messageRoutes from './routes/messageRoutes';
 import userRoutes from './routes/userRoutes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+
+const resolvePublicDir = (): string | null => {
+  const candidates = [
+    path.join(process.cwd(), 'public'),
+    path.join(process.cwd(), '../public'),
+    path.join(__dirname, '../../public'),
+  ];
+
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'index.html'))) {
+      return dir;
+    }
+  }
+
+  return null;
+};
 
 const app: Application = express();
 
@@ -41,6 +59,24 @@ app.use('/api/auth', authRoutes);
 app.use('/api/friends', friendRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
+
+const publicDir = resolvePublicDir();
+if (publicDir) {
+  app.use(express.static(publicDir));
+
+  app.get('*', (req: Request, res: Response, next) => {
+    if (
+      req.method !== 'GET' ||
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/socket.io') ||
+      req.path === '/health'
+    ) {
+      return next();
+    }
+
+    return res.sendFile(path.join(publicDir, 'index.html'));
+  });
+}
 
 app.use(notFoundHandler);
 app.use(errorHandler);
