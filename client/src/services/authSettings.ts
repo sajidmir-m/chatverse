@@ -15,27 +15,30 @@ export const getSupabaseProjectRef = (): string => {
   return match?.[1] || 'unknown';
 };
 
-export const isGoogleAuthEnabled = async (): Promise<boolean> => {
+export const isGoogleAuthEnabled = async (): Promise<boolean | null> => {
   try {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !anonKey) {
-      return false;
+      return null;
     }
 
     const response = await fetch(`${supabaseUrl}/auth/v1/settings`, {
-      headers: { apikey: anonKey },
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
     });
 
     if (!response.ok) {
-      return false;
+      return null;
     }
 
     const settings = (await response.json()) as AuthSettingsResponse;
     return settings.external?.google === true;
   } catch {
-    return false;
+    return null;
   }
 };
 

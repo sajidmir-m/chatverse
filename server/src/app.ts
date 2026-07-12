@@ -29,7 +29,22 @@ const resolvePublicDir = (): string | null => {
 
 const app: Application = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        connectSrc: ["'self'", 'https://*.supabase.co', 'wss://*.supabase.co'],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+        imgSrc: ["'self'", 'data:', 'blob:', 'https://*.supabase.co'],
+        frameSrc: ["'self'", 'https://accounts.google.com'],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  })
+);
 app.use(compression());
 app.use(
   cors({
