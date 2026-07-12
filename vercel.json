@@ -7,15 +7,15 @@
       "src": "server/vercel.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": "dist/**"
+        "includeFiles": "server/dist/**"
       }
     },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/server/vercel.js" },
-    { "src": "/health", "dest": "/server/vercel.js" },
-    { "src": "/socket.io/(.*)", "dest": "/server/vercel.js" },
+    { "src": "/api/(.*)", "dest": "server/vercel.js" },
+    { "src": "/health", "dest": "server/vercel.js" },
+    { "src": "/socket.io/(.*)", "dest": "server/vercel.js" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/public/index.html" }
   ]
