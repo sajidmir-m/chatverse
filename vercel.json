@@ -3,7 +3,13 @@
   "installCommand": "npm install --include=dev --prefix client && npm install --include=dev --prefix server",
   "buildCommand": "npm run vercel-build --prefix server",
   "builds": [
-    { "src": "server/vercel.js", "use": "@vercel/node" },
+    {
+      "src": "server/vercel.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "dist/**"
+      }
+    },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
