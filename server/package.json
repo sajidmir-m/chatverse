@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "npx tsc",
-    "build:client": "npm install --include=dev --prefix ../client && npm run build --prefix ../client",
+    "build:client": "npm install --include=dev --prefix ../client && node scripts/prepare-client-env.mjs && npm run build --prefix ../client",
     "copy:client": "node scripts/copy-frontend.mjs",
     "vercel-build": "npm run build:client && npm run build && npm run copy:client",
     "start": "node dist/server.js",

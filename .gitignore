@@ -1,6 +1,8 @@
 node_modules/
 .env
 .env.local
+.env.production.local
+client/.env.production.local
 .DS_Store
 Thumbs.db
 *.log
