@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
 import { useAuth } from '../contexts/AuthContext';
+import { APP_NAME } from '../constants/config';
 import { RegisterFormData } from '../types';
 import './LoginPage.css';
 
@@ -53,8 +54,8 @@ export const RegisterPage: React.FC = () => {
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
           </svg>
         </div>
-        <h1 className="login-page__title">Create Account</h1>
-        <p className="login-page__tagline">Sign up with Google or email — set up profile next</p>
+        <h1 className="login-page__title">{APP_NAME}</h1>
+        <p className="login-page__tagline">Create your account — set up profile next</p>
       </div>
 
       <div className="login-page__form-wrap">

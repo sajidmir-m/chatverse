@@ -31,8 +31,13 @@ const lines = [
   `VITE_SUPABASE_ANON_KEY=${supabaseAnonKey}`,
 ];
 
-if (apiUrl) lines.push(`VITE_API_URL=${apiUrl}`);
-if (socketUrl) lines.push(`VITE_SOCKET_URL=${socketUrl}`);
+// Never bake localhost API URLs into production builds
+if (apiUrl && !apiUrl.includes('localhost') && !apiUrl.includes('127.0.0.1')) {
+  lines.push(`VITE_API_URL=${apiUrl}`);
+}
+if (socketUrl && !socketUrl.includes('localhost') && !socketUrl.includes('127.0.0.1')) {
+  lines.push(`VITE_SOCKET_URL=${socketUrl}`);
+}
 
 writeFileSync(envFile, `${lines.join('\n')}\n`, 'utf8');
 console.log('Client env prepared for production build');

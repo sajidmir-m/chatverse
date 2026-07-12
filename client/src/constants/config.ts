@@ -25,6 +25,8 @@ const resolveBaseUrl = (): string => {
   return typeof window !== 'undefined' ? window.location.origin : '';
 };
 
+export const APP_NAME = 'Gitversa';
+
 export const API_URL = resolveBaseUrl();
 export const SOCKET_URL = normalizeApiOrigin(
   import.meta.env.VITE_SOCKET_URL?.trim() || resolveBaseUrl()

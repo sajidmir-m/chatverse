@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "chatversa",
+  "name": "gitversa",
   "scripts": {
     "build": "npm run vercel-build --prefix server",
     "vercel-build": "npm run vercel-build --prefix server",

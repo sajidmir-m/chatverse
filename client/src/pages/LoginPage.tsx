@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
 import { useAuth } from '../contexts/AuthContext';
 import { getSupabaseProjectRef, isGoogleAuthEnabled } from '../services/authSettings';
+import { APP_NAME } from '../constants/config';
 import { LoginFormData } from '../types';
 import './LoginPage.css';
 
@@ -72,7 +73,7 @@ export const LoginPage: React.FC = () => {
             <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" />
           </svg>
         </div>
-        <h1 className="login-page__title">RealTime Chat</h1>
+        <h1 className="login-page__title">{APP_NAME}</h1>
         <p className="login-page__tagline">Sign in with email or Google</p>
       </div>
 

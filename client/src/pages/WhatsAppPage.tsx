@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChatPanel } from '../components/ChatPanel';
 import { ChatSidebar } from '../components/ChatSidebar';
 import { useAuth } from '../contexts/AuthContext';
+import { APP_NAME } from '../constants/config';
 import { apiService } from '../services/api';
 import { OnlineUser } from '../types';
 import './WhatsAppPage.css';
@@ -54,7 +55,7 @@ export const WhatsAppPage: React.FC = () => {
         ) : (
           <div className="whatsapp-page__welcome">
             <div className="whatsapp-page__welcome-icon">💬</div>
-            <h2>RealTime Chat</h2>
+            <h2>{APP_NAME}</h2>
             <p>Search for people and add them as friends to start chatting.</p>
             <p className="whatsapp-page__welcome-hint">Send messages, photos, videos, voice & video calls.</p>
           </div>
