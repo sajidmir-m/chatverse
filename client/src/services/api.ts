@@ -14,13 +14,11 @@ import {
 } from '../types';
 
 const getClientBaseUrl = (): string => {
-  // Production: always use same-origin /api routes (works on Vercel single deploy)
   if (import.meta.env.PROD) {
     return '';
   }
 
-  const configured = API_URL.trim();
-  return configured || 'http://localhost:3000';
+  return API_URL.trim() || 'http://localhost:3000';
 };
 
 const createApiClient = (): AxiosInstance => {

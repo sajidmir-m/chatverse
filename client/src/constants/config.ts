@@ -11,13 +11,18 @@ const normalizeApiOrigin = (url: string): string => {
 
 const resolveBaseUrl = (): string => {
   const envUrl = import.meta.env.VITE_API_URL?.trim();
-  if (envUrl) return normalizeApiOrigin(envUrl);
 
-  if (import.meta.env.PROD) {
-    return typeof window !== 'undefined' ? window.location.origin : '';
+  // Local dev always uses the local backend (ignore production URLs in .env)
+  if (import.meta.env.DEV) {
+    if (envUrl && (envUrl.includes('localhost') || envUrl.includes('127.0.0.1'))) {
+      return normalizeApiOrigin(envUrl);
+    }
+    return 'http://localhost:3000';
   }
 
-  return 'http://localhost:3000';
+  if (envUrl) return normalizeApiOrigin(envUrl);
+
+  return typeof window !== 'undefined' ? window.location.origin : '';
 };
 
 export const API_URL = resolveBaseUrl();
