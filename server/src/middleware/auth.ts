@@ -1,15 +1,24 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Request, Response, NextFunction } from 'express';
-import { supabaseConfig } from '../config/supabase';
+import { getSupabaseConfig } from '../config/supabase';
 import { AppError } from './errorHandler';
 import { userService } from '../services/userService';
 
-const authClient = createClient(supabaseConfig.url, supabaseConfig.anonKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+let authClient: SupabaseClient | null = null;
+
+const getAuthClient = (): SupabaseClient => {
+  if (!authClient) {
+    const { url, anonKey } = getSupabaseConfig();
+    authClient = createClient(url, anonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  }
+
+  return authClient;
+};
 
 export const authenticate = async (
   req: Request,
@@ -27,7 +36,7 @@ export const authenticate = async (
     const {
       data: { user },
       error,
-    } = await authClient.auth.getUser(token);
+    } = await getAuthClient().auth.getUser(token);
 
     if (error || !user) {
       throw new AppError('Invalid or expired token', 401);
@@ -64,7 +73,7 @@ export const verifySocketToken = async (token: string): Promise<string> => {
   const {
     data: { user },
     error,
-  } = await authClient.auth.getUser(token);
+  } = await getAuthClient().auth.getUser(token);
 
   if (error || !user) {
     throw new AppError('Invalid socket token', 401);

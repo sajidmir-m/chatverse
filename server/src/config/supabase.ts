@@ -3,30 +3,51 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+let supabaseInstance: SupabaseClient | null = null;
 
-if (!supabaseUrl) {
-  throw new Error('Missing required environment variable: SUPABASE_URL');
-}
+const getEnv = (): { url: string; serviceKey: string; anonKey: string } => {
+  const url = process.env.SUPABASE_URL?.trim();
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  const anonKey = process.env.SUPABASE_ANON_KEY?.trim();
 
-if (!supabaseServiceRoleKey) {
-  throw new Error('Missing required environment variable: SUPABASE_SERVICE_ROLE_KEY');
-}
+  if (!url || !serviceKey || !anonKey) {
+    throw new Error(
+      'Missing Supabase env vars. Set SUPABASE_URL, SUPABASE_ANON_KEY, and SUPABASE_SERVICE_ROLE_KEY in Vercel.'
+    );
+  }
 
-if (!supabaseAnonKey) {
-  throw new Error('Missing required environment variable: SUPABASE_ANON_KEY');
-}
+  return { url, serviceKey, anonKey };
+};
 
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseServiceRoleKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
+export const getSupabase = (): SupabaseClient => {
+  if (!supabaseInstance) {
+    const { url, serviceKey } = getEnv();
+    supabaseInstance = createClient(url, serviceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  }
+
+  return supabaseInstance;
+};
+
+export const getSupabaseConfig = (): { url: string; anonKey: string } => {
+  const { url, anonKey } = getEnv();
+  return { url, anonKey };
+};
+
+/** @deprecated Use getSupabase() — kept for minimal service file churn */
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_target, prop, receiver) {
+    return Reflect.get(getSupabase() as object, prop, receiver);
   },
 });
 
-export const supabaseConfig = {
-  url: supabaseUrl,
-  anonKey: supabaseAnonKey,
-};
+export const supabaseConfig = new Proxy({} as { url: string; anonKey: string }, {
+  get(_target, prop) {
+    const config = getSupabaseConfig();
+    return config[prop as keyof typeof config];
+  },
+});
