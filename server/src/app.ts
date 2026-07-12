@@ -45,6 +45,8 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 
 if (process.env.VERCEL) {
+  const publicDir = path.join(process.cwd(), 'public');
+
   app.get('*', (req: Request, res: Response, next) => {
     if (
       req.path.startsWith('/api') ||
@@ -54,7 +56,14 @@ if (process.env.VERCEL) {
       return next();
     }
 
-    const indexPath = path.join(process.cwd(), 'public', 'index.html');
+    const relativePath = req.path === '/' ? 'index.html' : req.path.replace(/^\//, '');
+    const assetPath = path.join(publicDir, relativePath);
+
+    if (relativePath !== 'index.html' && fs.existsSync(assetPath) && fs.statSync(assetPath).isFile()) {
+      return res.sendFile(assetPath);
+    }
+
+    const indexPath = path.join(publicDir, 'index.html');
     if (fs.existsSync(indexPath)) {
       return res.sendFile(indexPath);
     }
