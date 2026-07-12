@@ -1,17 +1,16 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "fluid": true,
+  "version": 2,
   "installCommand": "npm install --include=dev --prefix client && npm install --include=dev --prefix server",
   "buildCommand": "npm run vercel-build --prefix server",
-  "functions": {
-    "server/vercel.js": {
-      "maxDuration": 300
-    }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/server/vercel.js" },
-    { "source": "/health", "destination": "/server/vercel.js" },
-    { "source": "/socket.io/(.*)", "destination": "/server/vercel.js" },
-    { "source": "/((?!api|health|socket\\.io|assets|favicon\\.svg).*)", "destination": "/index.html" }
+  "builds": [
+    { "src": "server/vercel.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server/vercel.js" },
+    { "src": "/health", "dest": "/server/vercel.js" },
+    { "src": "/socket.io/(.*)", "dest": "/server/vercel.js" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/public/index.html" }
   ]
 }
